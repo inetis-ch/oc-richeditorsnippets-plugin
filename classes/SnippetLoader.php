@@ -165,11 +165,11 @@ class SnippetLoader
 	 *
 	 * @return string
 	 */
-	protected static function getMapCacheKey()
+    protected static function getMapCacheKey()
     {
-		$theme = Theme::getActiveTheme();
-		$page = CmsController::getController()->getPage();
+        $theme = Theme::getActiveTheme();
+        $page = CmsController::getController()->getRouter();
 
-        return crc32($theme->getPath() . $page['url']) . '-dynamic-snippet-map';
+        return crc32($theme->getPath() . $page->getUrl()) . '-dynamic-snippet-map';
     }
 }
