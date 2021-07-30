@@ -20,3 +20,5 @@
     - '!!! This update fixes a compatibility issue with RainLab.Pages >= v1.3.5. You should make sure you are using the latest version of RainLab.Pages'
 2.1.5:
     - Fix error "Trying to access array offset on value of type null" that could happen under unknown circumstances
+2.1.6:
+    - Add composer.json to allow installation on OC2 - Thanks @rubenvanerk for pointing this out
