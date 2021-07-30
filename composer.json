@@ -1,5 +1,9 @@
 {
     "name": "inetis/richeditorsnippets",
     "description": "Use Snippets in any richeditor",
-    "type": "october-plugin"
+    "type": "october-plugin",
+    "licence": "MIT",
+    "require": {
+        "composer/installers": "~1.0"
+    }
 }
