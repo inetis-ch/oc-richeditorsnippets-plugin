@@ -44,8 +44,10 @@
             var options = $.oc.snippets[val];
 
             if (options) {
-                var $editor = this.$el.parents('[data-control="richeditor"]'),
-                    $snippetNode = $('<figure contenteditable="false" data-inspector-css-class="hero">&nbsp;</figure>');
+                // Get editor element. OC2's richeditor has 2 nested data-control=richeditor, we want the outer one
+                var $editor = this.$el.parents('[data-control="richeditor"]').last();
+
+                var $snippetNode = $('<figure contenteditable="false" data-inspector-css-class="hero">&nbsp;</figure>');
 
                 if (options.component) {
                     $snippetNode.attr({
@@ -80,8 +82,8 @@
 
                 $snippetNode.addClass('fr-draggable');
 
-                // Insert the content
-                $editor.richEditor('insertUiBlock', $snippetNode)
+                // Insert the content. In OC1 we were using RichEditor.prototype.insertUiBlock, but it cannot be reached anymore in OC2
+                this.figures.insert($snippetNode);
             }
 
         }

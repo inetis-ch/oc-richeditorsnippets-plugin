@@ -1,0 +1,8 @@
+/**
+ * Fix icon in October v2.
+ * TODO: there may be a cleaner way to do this if we figure out a way to hook into the "backend-component-richeditor-document-connector" Vue component.
+ */
+ .octo-icon-icon-newspaper-o::before {
+    content: "\f1ea";
+    font-family: FontAwesome !important;
+}

@@ -49,6 +49,15 @@ For example if you are using a richeditor with Rainlab.Blog, you may want to inc
 {% endfilter %}
 ```
 
+<a name="cmsSettings"></a>
+## Customizing CMS Editor settings
+
+In a default October installation, this plugin automatically injects itself to appear in the richeditor toolbar.
+
+But if you customize the "Toolbar Buttons" in the "Editor settings", you may want to add `snippets` in the list, otherwise the button will not appear anymore.
+
+Note for October v2 users: actually we are not able to inject ourselves in the new richeditor toolbar. You will also need to configure it manually in the CMS settings.
+
 <a name="fields"></a>
 ## Example usage in fields.yaml
 

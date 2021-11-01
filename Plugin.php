@@ -63,9 +63,10 @@ class Plugin extends PluginBase
             $widget->addJs('/plugins/rainlab/pages/assets/js/pages-page.js', 'RainLab.Pages');
             $widget->addJs('/plugins/rainlab/pages/assets/js/pages-snippets.js', 'RainLab.Pages');
 
-            // Adds custom javascript
+            // Adds custom assets
             $widget->addJs('/inetis/snippets/list');
             $widget->addJs('/plugins/inetis/richeditorsnippets/assets/js/froala.snippets.plugin.js', 'Inetis.RicheditorSnippets');
+            $widget->addCss('/plugins/inetis/richeditorsnippets/assets/css/richeditorsnippets.css', 'Inetis.RicheditorSnippets');
         });
 
         // Register components from cache for AJAX handlers
