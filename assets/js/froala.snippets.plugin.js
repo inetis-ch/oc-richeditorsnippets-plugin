@@ -17,17 +17,17 @@
 
         // The dropdown HTML
         html: function() {
-            if ($.oc.snippets) {
-                var html = '<ul class="fr-dropdown-list">';
-                $.each($.oc.snippets, function(i, snippet) {
-                    html += '<li><a class="fr-command" data-cmd="snippets" data-param1="' + snippet.snippet + '" title="' + snippet.name + '">' + snippet.name + '</a></li>';
-                });
-
-                return html + '</ul>';
-            }
-            else {
+            if (!$.oc.snippets) {
                 return '<div style="padding:10px;">No snippets are currently defined.</div>';
             }
+
+            var html = '<ul class="fr-dropdown-list">';
+
+            $.each($.oc.snippets, function(i, snippet) {
+                html += '<li><a class="fr-command" data-cmd="snippets" data-param1="' + snippet.snippet + '" title="' + snippet.name + '">' + snippet.name + '</a></li>';
+            });
+
+            return html + '</ul>';
         },
 
         // Save the dropdown action into undo stack.
@@ -122,7 +122,7 @@
      * that are displayed on page load (i.e. Rainlab Blog).
      */
     $(document).ready(function() {
-        var $editor = $('[data-control="richeditor"]');
+        var $editor = $('[data-control="richeditor"]:not([data-richeditor-vue])');
 
         if ($.oc.pagesPage && !window.location.pathname.includes('rainlab/pages')) {
             $.oc.pagesPage.snippetManager.initSnippets($editor);

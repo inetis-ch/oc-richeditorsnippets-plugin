@@ -1,6 +1,9 @@
 /**
- * Fix icon in October v2.
- * TODO: there may be a cleaner way to do this if we figure out a way to hook into the "backend-component-richeditor-document-connector" Vue component.
+ * "newspaper-o" icon is not in the octo-icon webfont yet, so let's use the legacy one
+ * for this bogous auto-generated name that will probably not be taken by anyone else.
+ * If we want to edit this name, in the JS it could be possible to replace the "mapIconName"
+ * function in the "backend.vuecomponents.richeditordocumentconnector.utils" module that be
+ * accessed using "$.oc.module.import('...')".
  */
  .octo-icon-icon-newspaper-o::before {
     content: "\f1ea";
