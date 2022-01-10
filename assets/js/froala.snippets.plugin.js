@@ -45,7 +45,7 @@
 
             if (options) {
                 // Get editor element. OC2's richeditor has 2 nested data-control=richeditor, we want the outer one
-                var $editor = this.$el.parents('[data-control="richeditor"]').last();
+                var $editor = this.$el.parents('[data-control="richeditor"]:not([data-richeditor-vue])');
 
                 var $snippetNode = $('<figure contenteditable="false" data-inspector-css-class="hero">&nbsp;</figure>');
 
