@@ -24,3 +24,5 @@
     - Add composer.json to allow installation on OC2 - Thanks @rubenvanerk for pointing this out
 2.1.7:
     - Fix compatibility with OC2 when used in plugins other than RainLab.Pages
+2.1.8:
+    - Avoid storing an empty array in cache when no snippets are passed
