@@ -65,6 +65,10 @@ class SnippetLoader
      */
     public static function saveCachedSnippets(CmsPage $page)
     {
+        if (empty(self::$pageSnippetsCache)) {
+            return;
+        }
+
         Cache::put(
             self::getMapCacheKey($page),
             serialize(self::$pageSnippetsCache),
