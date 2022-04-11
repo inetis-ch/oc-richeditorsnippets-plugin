@@ -19,8 +19,8 @@ class SnippetLoader
     /**
      * Add a component registered as a snippet to the active controller.
      *
-     * @param array $snippetInfo	The info of the snippet to register
-     * @return string				The generated unique alias for this snippet
+     * @param array $snippetInfo        The info of the snippet to register
+     * @return string                   The generated unique alias for this snippet
      * @throws SystemException
      * @throws CmsException
      */
@@ -40,8 +40,8 @@ class SnippetLoader
     /**
      * Add a partial registered as a snippet to the active controller.
      *
-     * @param array $snippetInfo	The info of the snippet to register
-     * @return string				The generated unique alias for this snippet
+     * @param array $snippetInfo        The info of the snippet to register
+     * @return string                   The generated unique alias for this snippet
      * @throws ApplicationException
      */
     public static function registerPartialSnippet($snippetInfo)
@@ -103,7 +103,7 @@ class SnippetLoader
      *
      * @param array $componentInfo
      * @param CmsController $controller
-     * @param bool $triggerRun			Should the run events of the component lifecycle be triggered?
+     * @param bool $triggerRun              Should the run events of the component lifecycle be triggered?
      * @throws SystemException
      * @throws CmsException
      */
