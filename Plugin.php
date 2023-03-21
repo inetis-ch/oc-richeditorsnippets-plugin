@@ -8,6 +8,7 @@ use Backend\Classes\Controller;
 use Inetis\RicheditorSnippets\Classes\SnippetParser;
 use RainLab\Pages\Controllers\Index as StaticPage;
 use Inetis\RicheditorSnippets\Classes\SnippetLoader;
+use Backend\Facades\BackendAuth;
 
 /**
  * RicheditorSnippets Plugin Information File
@@ -64,9 +65,12 @@ class Plugin extends PluginBase
             $widget->addJs('/plugins/rainlab/pages/assets/js/pages-snippets.js', 'RainLab.Pages');
 
             // Adds custom assets
-            $widget->addJs('/inetis/snippets/list');
-            $widget->addJs('/plugins/inetis/richeditorsnippets/assets/js/froala.snippets.plugin.js', 'Inetis.RicheditorSnippets');
-            $widget->addCss('/plugins/inetis/richeditorsnippets/assets/css/richeditorsnippets.css', 'Inetis.RicheditorSnippets');
+            $user = BackendAuth::getUser();
+            if ($user->hasAccess('rainlab.pages.access_snippets')) {
+                $widget->addJs('/inetis/snippets/list');
+                $widget->addJs('/plugins/inetis/richeditorsnippets/assets/js/froala.snippets.plugin.js', 'Inetis.RicheditorSnippets');
+                $widget->addCss('/plugins/inetis/richeditorsnippets/assets/css/richeditorsnippets.css', 'Inetis.RicheditorSnippets');
+            }
         });
 
         // Register components from cache for AJAX handlers
