@@ -24,47 +24,29 @@ Option 1 (offset to variable)
 {{ text | parseSnippets }}
 ```
 
-Option 2 (wrap in apply/filter)
+Option 2 (wrap in `{% apply %}` or `{% filter %}`)
 ```twig
-{# October 2+ #}
 {% apply parseSnippets %}
     {richeditor tab="Content" name="text" label="Text"}{/richeditor}
 {% endapply %}
-
-{# October 1 #}
-{% filter parseSnippets %}
-    {richeditor tab="Content" name="text" label="Text"}{/richeditor}
-{% endfilter %}
 ```
 
 <a name="contentBlocks"></a>
 ## Example usage for Rainlab Pages Content Blocks
 
 ```twig
-{# October 2+ #}
 {% apply parseSnippets %}
     {% content 'company-details.htm' %}
 {% endapply %}
-
-{# October 1 #}
-{% filter parseSnippets %}
-    {% content 'company-details.htm' %}
-{% endfilter %}
 ```
 
 Note this method is useful if you are including a third party component that will output richeditors but you don't want to override its partial.
 
 For example if you are using a richeditor with Rainlab.Blog, you may want to include the component as follow in your CMS page:
 ```twig
-{# October 2+ #}
 {% apply parseSnippets %}
     {% component 'blogPost' %}
 {% endapply %}
-
-{# October 1 #}
-{% filter parseSnippets %}
-    {% component 'blogPost' %}
-{% endfilter %}
 ```
 
 <a name="cmsSettings"></a>
@@ -95,15 +77,9 @@ If needed, you can pass extra parameters to your snippets from your theme like t
 {{ text | parseSnippets({context: 'foo'}) }}
 ```
 ```twig
-{# October 2+ #}
 {% apply parseSnippets({context: 'foo'}) %}
     {richeditor name="text" label="Text"}{/richeditor}
 {% endapply %}
-
-{# October 1 #}
-{% filter parseSnippets({context: 'foo'}) %}
-    {richeditor name="text" label="Text"}{/richeditor}
-{% endfilter %}
 ```
 
 You will then be able to access `context` as if it was a component property using `$this->property('context')`.
