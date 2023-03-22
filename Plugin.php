@@ -65,8 +65,7 @@ class Plugin extends PluginBase
             $widget->addJs('/plugins/rainlab/pages/assets/js/pages-snippets.js', 'RainLab.Pages');
 
             // Adds custom assets
-            $user = BackendAuth::getUser();
-            if ($user->hasAccess('rainlab.pages.access_snippets')) {
+            if (optional(BackendAuth::getUser())->hasAccess('rainlab.pages.access_snippets')) {
                 $widget->addJs('/inetis/snippets/list');
                 $widget->addJs('/plugins/inetis/richeditorsnippets/assets/js/froala.snippets.plugin.js', 'Inetis.RicheditorSnippets');
                 $widget->addCss('/plugins/inetis/richeditorsnippets/assets/css/richeditorsnippets.css', 'Inetis.RicheditorSnippets');
