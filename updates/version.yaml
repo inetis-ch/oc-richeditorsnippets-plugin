@@ -26,3 +26,5 @@
     - Fix compatibility with OC2 when used in plugins other than RainLab.Pages
 2.1.8:
     - Avoid storing an empty array in cache when no snippets are passed
+2.1.9:
+    - Remove snippet button from editor when user doesn't have permission to fetch snippets list (rainlab.pages.access_snippets) - Thanks @tschortsch
