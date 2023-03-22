@@ -19,13 +19,19 @@ For documentation regarding creating snippets, please see https://github.com/rai
 ## Example usage for Rainlab Pages Syntax Fields
 
 Option 1 (offset to variable)
-```
+```twig
 {variable type="richeditor" tab="Content" name="text" label="Text"}{/variable}
 {{ text | parseSnippets }}
 ```
 
-Option 2 (wrap in filter)
-```
+Option 2 (wrap in apply/filter)
+```twig
+{# October 2+ #}
+{% apply parseSnippets %}
+    {richeditor tab="Content" name="text" label="Text"}{/richeditor}
+{% endapply %}
+
+{# October 1 #}
 {% filter parseSnippets %}
     {richeditor tab="Content" name="text" label="Text"}{/richeditor}
 {% endfilter %}
@@ -34,7 +40,13 @@ Option 2 (wrap in filter)
 <a name="contentBlocks"></a>
 ## Example usage for Rainlab Pages Content Blocks
 
-```
+```twig
+{# October 2+ #}
+{% apply parseSnippets %}
+    {% content 'company-details.htm' %}
+{% endapply %}
+
+{# October 1 #}
 {% filter parseSnippets %}
     {% content 'company-details.htm' %}
 {% endfilter %}
@@ -43,7 +55,13 @@ Option 2 (wrap in filter)
 Note this method is useful if you are including a third party component that will output richeditors but you don't want to override its partial.
 
 For example if you are using a richeditor with Rainlab.Blog, you may want to include the component as follow in your CMS page:
-```
+```twig
+{# October 2+ #}
+{% apply parseSnippets %}
+    {% component 'blogPost' %}
+{% endapply %}
+
+{# October 1 #}
 {% filter parseSnippets %}
     {% component 'blogPost' %}
 {% endfilter %}
@@ -56,7 +74,7 @@ In a default October installation, this plugin automatically injects itself to a
 
 But if you customize the "Toolbar Buttons" in the "Editor settings", you may want to add `snippets` in the list, otherwise the button will not appear anymore.
 
-Note for October v2 users: actually we are not able to inject ourselves in the new richeditor toolbar. You will also need to configure it manually in the CMS settings.
+**Note for October 2 and 3 users**: actually we are not able to inject ourselves in the new richeditor toolbar. You will also need to configure it manually in the CMS settings.
 
 <a name="fields"></a>
 ## Example usage in fields.yaml
@@ -73,10 +91,16 @@ html_content:
 <a name="extraParameters"></a>
 ## Pass extra parameters
 If needed, you can pass extra parameters to your snippets from your theme like this:
-```
+```twig
 {{ text | parseSnippets({context: 'foo'}) }}
 ```
-```
+```twig
+{# October 2+ #}
+{% apply parseSnippets({context: 'foo'}) %}
+    {richeditor name="text" label="Text"}{/richeditor}
+{% endapply %}
+
+{# October 1 #}
 {% filter parseSnippets({context: 'foo'}) %}
     {richeditor name="text" label="Text"}{/richeditor}
 {% endfilter %}
