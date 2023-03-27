@@ -28,3 +28,6 @@
     - Avoid storing an empty array in cache when no snippets are passed
 2.1.9:
     - Remove snippet button from editor when user doesn't have permission to fetch snippets list (rainlab.pages.access_snippets) - Thanks @tschortsch
+2.1.10:
+    - Load the proper active theme when using multisite on October 3
+    - Update documentation to use the apply Twig tag instead of the deprecated filter tag
