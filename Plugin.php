@@ -62,7 +62,6 @@ class Plugin extends PluginBase
             // Adds default CSS/JS for snippets from Rainlab Pages Plugin
             $widget->addCss('/plugins/rainlab/pages/assets/css/pages.css', 'RainLab.Pages');
             $widget->addJs('/plugins/rainlab/pages/assets/js/pages-page.js', 'RainLab.Pages');
-            $widget->addJs('/plugins/rainlab/pages/assets/js/pages-snippets.js', 'RainLab.Pages');
 
             // Adds custom assets
             if (optional(BackendAuth::getUser())->hasAccess('rainlab.pages.access_snippets')) {
