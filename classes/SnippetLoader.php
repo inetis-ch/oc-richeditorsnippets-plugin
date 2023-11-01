@@ -8,7 +8,7 @@ use Cms\Classes\Controller as CmsController;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
 use Cms\Classes\ComponentManager;
-use RainLab\Pages\Classes\SnippetManager;
+use Cms\Classes\SnippetManager;
 use Session;
 use SystemException;
 

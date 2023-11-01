@@ -75,6 +75,8 @@
                 $snippetNode.attr({
                     'data-snippet': options.snippet,
                     'data-name': options.name,
+                    'data-control': 'snippet',
+                    'data-inspector-handler-alias': 'ocsnippetlookup',
                     'tabindex': '0',
                     'draggable': 'true',
                     'data-ui-block': 'true'

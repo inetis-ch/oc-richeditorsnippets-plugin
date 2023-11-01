@@ -1,7 +1,7 @@
 <?php
 
 use Cms\Classes\Theme;
-use RainLab\Pages\Classes\SnippetManager;
+use Cms\Classes\SnippetManager;
 use RainLab\Pages\Controllers\Index as StaticPage;
 
 Route::get('/inetis/snippets/list', function () {
