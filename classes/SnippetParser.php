@@ -2,15 +2,13 @@
 
 /***
 
-This file is mostly copied from RainLab\Pages\Classes\Snippet
+This file is mostly copied from RainLab\Pages\Classes\Snippet (removed after 1.5.12)
 
 ***/
 
 use ApplicationException;
 use Cms\Classes\CmsException;
 use Lang;
-use Cms\Classes\Snippet;
-use Cms\Classes\SnippetManager;
 use Cms\Classes\Controller as CmsController;
 use Cms\Classes\Theme;
 use SystemException;
@@ -109,7 +107,8 @@ class SnippetParser
      */
     protected static function preprocessPropertyValues($theme, $snippetCode, $componentClass, $properties)
     {
-        $snippet = SnippetManager::instance()->findByCodeOrComponent($theme, $snippetCode, $componentClass, true);
+        $manager = VersionHelper::instance()->getSnippetManager();
+        $snippet = $manager->findByCodeOrComponent($theme, $snippetCode, $componentClass, true);
         if (!$snippet) {
             throw new ApplicationException(Lang::get('rainlab.pages::lang.snippet.not_found', ['code' => $snippetCode]));
         }

@@ -8,7 +8,6 @@ use Cms\Classes\Controller as CmsController;
 use Cms\Classes\Page as CmsPage;
 use Cms\Classes\Theme;
 use Cms\Classes\ComponentManager;
-use Cms\Classes\SnippetManager;
 use Session;
 use SystemException;
 
@@ -47,7 +46,7 @@ class SnippetLoader
     public static function registerPartialSnippet($snippetInfo)
     {
         $theme = Theme::getActiveTheme();
-        $partialSnippetMap = SnippetManager::instance()->getPartialSnippetMap($theme);
+        $partialSnippetMap = VersionHelper::instance()->getSnippetManager()->getPartialSnippetMap($theme);
         $snippetCode = $snippetInfo['code'];
 
         if (!array_key_exists($snippetCode, $partialSnippetMap)) {

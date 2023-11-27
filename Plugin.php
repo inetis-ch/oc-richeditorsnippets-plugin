@@ -1,6 +1,7 @@
 <?php namespace Inetis\RicheditorSnippets;
 
 use Event;
+use Inetis\RicheditorSnippets\Classes\VersionHelper;
 use Input;
 use System\Classes\PluginBase;
 use Backend\FormWidgets\RichEditor;
@@ -59,9 +60,12 @@ class Plugin extends PluginBase
         });
 
         RichEditor::extend(function($widget) {
-            // Adds default CSS/JS for snippets from Rainlab Pages Plugin
-            $widget->addCss('/plugins/rainlab/pages/assets/css/pages.css', 'RainLab.Pages');
-            $widget->addJs('/plugins/rainlab/pages/assets/js/pages-page.js', 'RainLab.Pages');
+            // Adds default CSS/JS for snippets from RainLab.Pages Plugin
+            if (VersionHelper::instance()->usesLegacyPagesSnippets()) {
+                $widget->addCss('/plugins/rainlab/pages/assets/css/pages.css', 'RainLab.Pages');
+                $widget->addJs('/plugins/rainlab/pages/assets/js/pages-page.js', 'RainLab.Pages');
+                $widget->addJs('/plugins/rainlab/pages/assets/js/pages-snippets.js', 'RainLab.Pages');
+            }
 
             // Adds custom assets
             if (optional(BackendAuth::getUser())->hasAccess('rainlab.pages.access_snippets')) {

@@ -1,8 +1,8 @@
 <?php
 
 use Cms\Classes\Theme;
-use Cms\Classes\SnippetManager;
 use RainLab\Pages\Controllers\Index as StaticPage;
+use Inetis\RicheditorSnippets\Classes\VersionHelper;
 
 Route::get('/inetis/snippets/list', function () {
     $user = BackendAuth::getUser();
@@ -20,7 +20,7 @@ Route::get('/inetis/snippets/list', function () {
     // - Figure out a way to populate snippets list from the base BackendController instead of this route.
     $controller = App::make(StaticPage::class);
 
-    $snippets = collect(SnippetManager::instance()->listSnippets(Theme::getEditTheme()))
+    $snippets = collect(VersionHelper::instance()->getSnippetManager()->listSnippets(Theme::getEditTheme()))
         ->transform(function ($item) {
             return [
                 'component' => $item->getComponentClass(),
