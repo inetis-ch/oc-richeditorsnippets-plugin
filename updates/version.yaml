@@ -31,3 +31,8 @@
 2.1.10:
     - Load the proper active theme when using multisite on October 3
     - Update documentation to use the apply Twig tag instead of the deprecated filter tag
+2.2.0:
+    - Support for October 3.4 and up - Thanks @xmelic8
+    - Removed RainLab.Pages dependency (still required if running October 3.3 or down)
+    - '|links or |content filters are now included when using |parseSnippet alone'
+    - Updated snippets parser (now using the same as OC 3.5), should be a bit faster and support some additional features
