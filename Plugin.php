@@ -63,7 +63,7 @@ class Plugin extends PluginBase
             }
 
             // Adds custom assets
-            if (optional(BackendAuth::getUser())->hasAccess('rainlab.pages.access_snippets')) {
+            if ($this->canAccessSnippets()) {
                 $widget->addJs('/inetis/snippets/list');
                 $widget->addJs('/plugins/inetis/richeditorsnippets/assets/js/froala.snippets.plugin.js', 'Inetis.RicheditorSnippets');
                 $widget->addCss('/plugins/inetis/richeditorsnippets/assets/css/richeditorsnippets.css', 'Inetis.RicheditorSnippets');
@@ -94,5 +94,19 @@ class Plugin extends PluginBase
                 }
             ]
         ];
+    }
+
+    private function canAccessSnippets(): bool
+    {
+        if (!($user = BackendAuth::getUser())) {
+            return false;
+        }
+
+        if (VersionHelper::instance()->usesLegacyPagesSnippets()) {
+            return $user->hasAccess('rainlab.pages.access_snippets');
+        }
+
+        // Since OC 3.4, there is no permission to restrict snippets access
+        return true;
     }
 }
