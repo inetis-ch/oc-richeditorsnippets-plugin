@@ -17,11 +17,6 @@ use Backend\Facades\BackendAuth;
 class Plugin extends PluginBase
 {
     /**
-     * @var array Plugin dependencies
-     */
-    public $require = ['RainLab.Pages'];
-
-    /**
      * Returns information about this plugin.
      *
      * @return array
