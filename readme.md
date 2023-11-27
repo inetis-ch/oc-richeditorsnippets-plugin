@@ -1,6 +1,7 @@
 # October Richeditor Snippets
 
 - [Introduction](#introduction)
+- [Usage](#usage)
 - [Example usage for Rainlab Syntax Fields](#syntaxFields)
 - [Example usage for Rainlab Pages Content Blocks](#contentBlocks)
 - [Example usage in fields.yaml](#fields)
@@ -9,11 +10,24 @@
 <a name="introduction"></a>
 ## Introduction
 
-One of the great features of Rainlab Pages plugin is the `Snippets` feature. It allows the developer to hand over management of complex items, such as forms, maps, widgets, etc to the client. For more information on what a Snippet is, please see https://github.com/rainlab/pages-plugin#snippets.
+For more information about snippets, please refer to the [official documentation](https://docs.octobercms.com/3.x/cms/themes/snippets.html).
 
-This plugin simply extends the ability to re-use these snippets from any `richeditor` by providing an additional dropdown to the Froala Richeditor with a list of available snippets (supports partial and component based snippets). It also provides a twig filter to allow the parsing of implemented snippets.
+Back in the days, snippets were a [feature introduced by](https://octobercms.com/blog/post/introducing-snippets) the RainLab Pages plugin. Unfortunately, they were only usable in RainLab Pages itself, not in other plugins.
 
-For documentation regarding creating snippets, please see https://github.com/rainlab/pages-plugin#snippets-created-from-partials
+This plugin was created in order to add the ability to use snippets (supports partial and component based snippets) in any `richeditor`.
+
+As of [October 3.4 release](https://octobercms.com/support/article/rn-35), snippets are now part of the core and, just like this plugin, available on all RichEditors.
+
+In most cases, users can migrate to the native snippets feature instead of using this plugin, but there is still one reason that may make you need this plugin: AJAX handlers. In the native snippets feature, you need to include the components of every snippet in the layout, hope there is no name conflict between them, and this will not work if your AJAX handler uses a property (it will run with the values from the component, not the ones set in the snippet). You will also run into issues if the same snippet is included multiple times.
+
+<a name="usage"></a>
+## Usage
+Install this plugin. If your October core version is lower than 3.4.0, also install RainLab.Pages. Then, wherever you want to display a richeditor, apply the `parseSnippets` filter. Note that you don't need to chain it with `|raw`, `|links` or `|content`, as this plugin will take care of running them.
+```twig
+{{ myRichEditorContent | parseSnippets }}
+```
+
+In the backend editor settings, you will need to add `snippets` to the list of "Toolbar buttons".
 
 <a name="syntaxFields"></a>
 ## Example usage for Rainlab Pages Syntax Fields
@@ -21,6 +35,7 @@ For documentation regarding creating snippets, please see https://github.com/rai
 Option 1 (offset to variable)
 ```twig
 {variable type="richeditor" tab="Content" name="text" label="Text"}{/variable}
+
 {{ text | parseSnippets }}
 ```
 
@@ -40,23 +55,14 @@ Option 2 (wrap in `{% apply %}` or `{% filter %}`)
 {% endapply %}
 ```
 
-Note this method is useful if you are including a third party component that will output richeditors but you don't want to override its partial.
+Note this method is useful if you are including a third party component that will output the content of a richeditors, but you don't want to override its partial.
 
-For example if you are using a richeditor with Rainlab.Blog, you may want to include the component as follow in your CMS page:
+For example if you are using a richeditor with Rainlab.Blog, you may want to include the component as follows in your CMS page:
 ```twig
 {% apply parseSnippets %}
     {% component 'blogPost' %}
 {% endapply %}
 ```
-
-<a name="cmsSettings"></a>
-## Customizing CMS Editor settings
-
-In a default October installation, this plugin automatically injects itself to appear in the richeditor toolbar.
-
-But if you customize the "Toolbar Buttons" in the "Editor settings", you may want to add `snippets` in the list, otherwise the button will not appear anymore.
-
-**Note for October 2 and 3 users**: actually we are not able to inject ourselves in the new richeditor toolbar. You will also need to configure it manually in the CMS settings.
 
 <a name="fields"></a>
 ## Example usage in fields.yaml
@@ -86,5 +92,5 @@ You will then be able to access `context` as if it was a component property usin
 
 ## Contributors
 - Tough Developer: creator of the [original version](https://github.com/toughdeveloper/oc-richeditorsnippets-plugin)
-- inetis
+- [inetis](https://inetis.ch) (current maintainer)
 - [All Contributors](https://github.com/inetis-ch/oc-richeditorsnippets-plugin/graphs/contributors)
