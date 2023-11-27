@@ -3,12 +3,12 @@
 /***
 
 This file is mostly copied from RainLab\Pages\Classes\Snippet (removed after 1.5.12)
+Since October 3.5, it was slightly refactored and moved to \Cms\Classes\PageManager
 
 ***/
 
 use ApplicationException;
 use Cms\Classes\CmsException;
-use Lang;
 use Cms\Classes\Controller as CmsController;
 use Cms\Classes\Theme;
 use SystemException;
@@ -27,12 +27,12 @@ class SnippetParser
      */
     public static function parse($markup, $params = [])
     {
-        $map = self::extractSnippetsFromMarkup($markup);
+        $searches = $replaces = [];
+        $theme = Theme::getActiveTheme();
+        $parsedSnippets = self::extractSnippetsFromMarkup($markup, $theme);
         $controller = CmsController::getController();
 
-        foreach ($map as $snippetDeclaration => $snippetInfo) {
-            $snippetCode = $snippetInfo['code'];
-
+        foreach ($parsedSnippets as $snippetDeclaration => $snippetInfo) {
             if (isset($snippetInfo['component'])) {
                 // The snippet is a component registered as a snippet
                 $snippetAlias = SnippetLoader::registerComponentSnippet($snippetInfo);
@@ -44,18 +44,28 @@ class SnippetParser
                 $generatedMarkup = $controller->renderPartial($partialName, array_merge($params, $snippetInfo['properties']));
             }
 
-            $pattern = preg_quote($snippetDeclaration);
-            $markup = mb_ereg_replace($pattern, $generatedMarkup, $markup);
+            $searches[] = $snippetDeclaration;
+            $replaces[] = $generatedMarkup;
+        }
+
+        if ($searches) {
+            $markup = str_replace($searches, $replaces, $markup);
         }
 
         return $markup;
     }
 
-    protected static function extractSnippetsFromMarkup($markup)
+    protected static function extractSnippetsFromMarkup($markup, $theme)
     {
         $map = [];
         $matches = [];
-        $theme = Theme::getActiveTheme();
+
+        // Converts a json: payload from the inspector
+        $processPropertyValue = function($value) {
+            return str_starts_with($value, 'json:')
+                ? json_decode(urldecode(substr($value, 5)), true)
+                : $value;
+        };
 
         if (preg_match_all('/\<figure\s+[^\>]+\>[^\<]*\<\/figure\>/i', $markup, $matches)) {
             foreach ($matches[0] as $snippetDeclaration) {
@@ -66,29 +76,32 @@ class SnippetParser
                 }
 
                 $snippetCode = $nameMatch[1];
-
                 $properties = [];
-
                 $propertyMatches = [];
                 if (preg_match_all('/data\-property-(?<property>[^=]+)\s*=\s*\"(?<value>[^\"]+)\"/i', $snippetDeclaration, $propertyMatches)) {
                     foreach ($propertyMatches['property'] as $index => $propertyName) {
-                        $properties[$propertyName] = $propertyMatches['value'][$index];
+                        $properties[$propertyName] = $processPropertyValue($propertyMatches['value'][$index]);
                     }
                 }
 
                 $componentMatch = [];
                 $componentClass = null;
-
                 if (preg_match('/data\-component\s*=\s*"([^"]+)"/', $snippetDeclaration, $componentMatch)) {
                     $componentClass = $componentMatch[1];
+                }
+
+                $snippetAjaxMatches = [];
+                $snippetAjax = false;
+                if (preg_match('/data\-ajax\s*=\s*"([^"]+)"/', $snippetDeclaration, $snippetAjaxMatches)) {
+                    $snippetAjax = $snippetAjaxMatches[1] === 'true' || $snippetAjaxMatches[1] === '1';
                 }
 
                 // Apply default values for properties not defined in the markup
                 // and normalize property code names.
                 $properties = self::preprocessPropertyValues($theme, $snippetCode, $componentClass, $properties);
-
                 $map[$snippetDeclaration] = [
                     'code'       => $snippetCode,
+                    'useAjax'    => $snippetAjax,
                     'component'  => $componentClass,
                     'properties' => $properties
                 ];
@@ -109,8 +122,15 @@ class SnippetParser
     {
         $manager = VersionHelper::instance()->getSnippetManager();
         $snippet = $manager->findByCodeOrComponent($theme, $snippetCode, $componentClass, true);
+
+        // Try without cache
         if (!$snippet) {
-            throw new ApplicationException(Lang::get('rainlab.pages::lang.snippet.not_found', ['code' => $snippetCode]));
+            $snippet = $manager->findByCodeOrComponent($theme, $snippetCode, $componentClass, false);
+        }
+
+        // Cannot proceed
+        if (!$snippet) {
+            return [];
         }
 
         $properties = array_change_key_case($properties);
