@@ -10,6 +10,7 @@ Since October 3.4, it was slightly refactored and moved to \Cms\Classes\PageMana
 use ApplicationException;
 use Cms\Classes\CmsException;
 use Cms\Classes\Controller as CmsController;
+use Cms\Classes\PageManager;
 use Cms\Classes\Theme;
 use SystemException;
 
@@ -27,6 +28,11 @@ class SnippetParser
      */
     public static function parse($markup, $params = [])
     {
+        // Also process links, like the |content filter does
+        if (VersionHelper::instance()->hasMinimumOctoberVersion('3.2')) {
+            $markup = PageManager::processLinks($markup);
+        }
+
         $searches = $replaces = [];
         $theme = Theme::getActiveTheme();
         $parsedSnippets = self::extractSnippetsFromMarkup($markup, $theme);
