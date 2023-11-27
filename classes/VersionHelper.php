@@ -17,11 +17,11 @@ class VersionHelper
 
     /**
      * Check if the system is using the legacy snippets manager from RainLab.Pages or if we can use the native snippets
-     * (October 3.5 and up)
+     * (October 3.4 and up)
      */
     public function usesLegacyPagesSnippets(): bool
     {
-        return !$this->hasMinimumOctoberVersion('3.5') && $this->hasRainLabPages;
+        return !$this->hasMinimumOctoberVersion('3.4') && $this->hasRainLabPages;
     }
 
     /**

@@ -3,7 +3,7 @@
 /***
 
 This file is mostly copied from RainLab\Pages\Classes\Snippet (removed after 1.5.12)
-Since October 3.5, it was slightly refactored and moved to \Cms\Classes\PageManager
+Since October 3.4, it was slightly refactored and moved to \Cms\Classes\PageManager
 
 ***/
 

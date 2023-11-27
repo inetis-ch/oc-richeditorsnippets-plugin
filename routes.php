@@ -10,7 +10,7 @@ Route::get('/inetis/snippets/list', function () {
         return response('Forbidden', 401);
     }
 
-    // OC 3.5 does not have a permission for snippets access, but we should still check it on legacy environments
+    // OC 3.4 does not have a permission for snippets access, but we should still check it on legacy environments
     if (VersionHelper::instance()->usesLegacyPagesSnippets() && !$user->hasAccess('rainlab.pages.access_snippets')) {
         return response('Forbidden', 401);
     }
