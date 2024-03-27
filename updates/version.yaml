@@ -36,3 +36,5 @@
     - Removed RainLab.Pages dependency (still required if running October 3.3 or down)
     - '|links or |content filters are now included when using |parseSnippet alone'
     - Updated snippets parser (now using the same as OC 3.5), should be a bit faster and support some additional features
+2.2.1:
+    - Support for basic HTML in snippet properties - Thanks @grwllrnc
