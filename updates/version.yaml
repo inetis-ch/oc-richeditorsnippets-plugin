@@ -42,3 +42,5 @@
     - Fix some cases where content between two snippets could be stripped
 2.2.3:
     - Support for OctoberCMS 4.0
+2.2.4:
+    - Allow plugin to use composer/installers v2 to fix a deprecation warning in php 8.4
